@@ -1,0 +1,3 @@
+---
+plugin: oracle.oci.oci_dynamic_inventory
+region: us-ashburn-1
