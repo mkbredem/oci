@@ -1,3 +1,38 @@
 ---
-plugin: oracle.oci.oci_dynamic_inventory
-region: us-ashburn-1
+plugin: oracle.oci.oci
+
+# Optional: OCI profile name if you're using a config file (not required here)
+# profile: DEFAULT
+
+# Since you're injecting credentials via environment variables, no config_file is needed
+# Use key_by = "display_name" to set inventory hostnames to instance display names
+key_by: display_name
+
+# Compartment ID can also be set here, but you're injecting it via OCI_COMPARTMENT_ID
+# So you can omit it, or include it for local testing
+# compartment_id: "{{ lookup('env', 'OCI_COMPARTMENT_ID') }}"
+
+# Optional: specify which region to query (if not set via ENV)
+# region: "{{ lookup('env', 'OCI_REGION') }}"
+
+# Limit what instance states to include (e.g., only RUNNING instances)
+instance_states:
+  - RUNNING
+
+# Optional filters (by tags, shape, etc.)
+# filters:
+#   shape: VM.Standard.E4.Flex
+
+# Group by compartments, availability domain, etc.
+compose:
+  ansible_host: public_ip  # or 'private_ip' depending on use case
+
+groups:
+  compartment: compartment_name
+
+#user: "{{ lookup('env', 'OCI_USER', default='') }}"
+#fingerprint: "{{ lookup('env', 'OCI_FINGERPRINT', default='')}}"
+#key_file: "{{ lookup('env', OCI_KEY_CONTENT', default='') }}"
+#tenancy: "{{ lookup('env', 'OCI_TENANCY', default='') }}"
+#region: "{{ lookup('env', 'OCI_REGION', default='') }}"
+#compartment_ocid: "{{ lookup('env', 'OCI_COMPARTMENT_OCID', default='') }}"
